@@ -1,143 +1,138 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI SaaS - Next-Gen CRM & Automation</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>أتمتة المتاجر الإلكترونية | زيادة المبيعات تلقائيًا</title>
 
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .rtl { direction: rtl; }
-        .ltr { direction: ltr; }
-        .transition-all { transition: all 0.3s ease; }
-    </style>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
 </head>
 
-<body class="bg-white text-slate-900 rtl">
+<body class="bg-white text-slate-900">
 
-<div id="app" class="min-h-screen">
+<!-- ================= NAV ================= -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <div class="flex items-center gap-3 font-bold text-xl">
+      <div class="w-9 h-9 bg-slate-900 text-white rounded-lg flex items-center justify-center">⚡</div>
+      TIXWOO
+    </div>
+    <button class="hidden md:block bg-slate-900 text-white px-6 py-2 rounded-full text-sm">
+      اطلب عرضًا الآن
+    </button>
+  </div>
+</nav>
 
-    <!-- NAV -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur border-b border-slate-100">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<!-- ================= HERO ================= -->
+<section class="pt-36 pb-28 px-6 text-center max-w-6xl mx-auto">
+  <span class="inline-block mb-6 px-4 py-1 text-xs font-bold bg-slate-100 rounded-full">
+    أتمتة ذكية للمتاجر الإلكترونية
+  </span>
 
-            <div class="flex items-center gap-3 cursor-pointer">
-                <div class="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center text-white">🤖</div>
-                <span class="font-bold text-xl">AISaaS</span>
-            </div>
+  <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-8">
+    حوّل محادثات عملائك<br>
+    <span class="text-slate-500">إلى مبيعات تلقائية</span>
+  </h1>
 
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="#" class="text-slate-900">الرئيسية</a>
-                <a href="#services" class="text-slate-500 hover:text-slate-900">الخدمات</a>
-                <a href="#contact" class="text-slate-500 hover:text-slate-900">تواصل معنا</a>
-                <button class="bg-slate-900 text-white px-5 py-2 rounded-full">
-                    ابدأ الآن
-                </button>
-            </div>
-        </div>
-    </nav>
+  <p class="text-lg md:text-xl text-slate-500 max-w-3xl mx-auto mb-12">
+    نظام أتمتة متكامل يربط WhatsApp، الدردشة المباشرة، والطلبات
+    ليعمل متجرك 24/7 بدون فريق دعم.
+  </p>
 
-    <!-- HERO -->
-    <section class="pt-32 pb-24 text-center max-w-5xl mx-auto px-6">
-        <span class="inline-block mb-6 px-4 py-1 text-xs font-bold bg-slate-100 rounded-full">
-            قوة المصادر المفتوحة
-        </span>
+  <div class="flex flex-col sm:flex-row justify-center gap-4">
+    <button class="px-10 py-4 bg-slate-900 text-white rounded-full text-base font-medium">
+      جرّب الأتمتة الآن
+    </button>
+    <button class="px-10 py-4 border border-slate-200 rounded-full text-slate-600">
+      شاهد كيف يعمل
+    </button>
+  </div>
+</section>
 
-        <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
-            الجيل القادم من أنظمة إدارة العملاء والأتمتة
-        </h1>
+<!-- ================= TRUST ================= -->
+<section class="py-16 border-t border-slate-100">
+  <div class="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+    <div>
+      <p class="text-3xl font-bold">+38%</p>
+      <p class="text-sm text-slate-500 mt-1">زيادة التحويل</p>
+    </div>
+    <div>
+      <p class="text-3xl font-bold">24/7</p>
+      <p class="text-sm text-slate-500 mt-1">رد آلي فوري</p>
+    </div>
+    <div>
+      <p class="text-3xl font-bold">0%</p>
+      <p class="text-sm text-slate-500 mt-1">فقدان رسائل</p>
+    </div>
+    <div>
+      <p class="text-3xl font-bold">100%</p>
+      <p class="text-sm text-slate-500 mt-1">ملكية بياناتك</p>
+    </div>
+  </div>
+</section>
 
-        <p class="text-lg text-slate-500 max-w-2xl mx-auto mb-10">
-            نظام متكامل يجمع Chatwoot و n8n و Typebot و WhatsApp.
+<!-- ================= FEATURES ================= -->
+<section class="py-28 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-20">
+      ماذا نؤتمت في متجرك؟
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-10">
+      <div class="bg-white p-8 rounded-2xl border">
+        <h3 class="font-bold text-lg mb-3">الردود التلقائية</h3>
+        <p class="text-slate-500 text-sm">
+          رد فوري على استفسارات الأسعار، الشحن، والتوفر بدون تدخل بشري.
         </p>
+      </div>
 
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <button class="px-8 py-4 bg-slate-900 text-white rounded-full">
-                عرض الخطط
-            </button>
-            <a href="#contact" class="px-8 py-4 border border-slate-200 rounded-full text-slate-600">
-                المزيد من المعلومات
-            </a>
-        </div>
-    </section>
-
-    <!-- SERVICES -->
-    <section id="services" class="py-24 bg-slate-50 border-t border-slate-100">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10">
-
-            <div class="bg-white p-8 rounded-2xl border">
-                <h3 class="text-xl font-bold mb-2">الخدمة المُدارة</h3>
-                <p class="text-sm text-slate-500 mb-6">
-                    نحن نستضيف وندير كل شيء.
-                </p>
-                <ul class="space-y-3 text-sm text-slate-600 mb-6">
-                    <li>✔ استضافة سحابية</li>
-                    <li>✔ نسخ احتياطي يومي</li>
-                    <li>✔ تحديثات تلقائية</li>
-                </ul>
-                <button class="w-full py-3 bg-slate-900 text-white rounded-lg">
-                    اشترك الآن
-                </button>
-            </div>
-
-            <div class="bg-white p-8 rounded-2xl border">
-                <h3 class="text-xl font-bold mb-2">نشر على خادمك</h3>
-                <p class="text-sm text-slate-500 mb-6">
-                    نثبّت النظام على VPS خاص بك.
-                </p>
-                <ul class="space-y-3 text-sm text-slate-600 mb-6">
-                    <li>✔ تحكم كامل</li>
-                    <li>✔ صلاحيات Root</li>
-                    <li>✔ دعم 30 يوم</li>
-                </ul>
-                <button class="w-full py-3 border border-slate-200 rounded-lg">
-                    احجز الخدمة
-                </button>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="py-24 max-w-5xl mx-auto px-6">
-        <h2 class="text-3xl font-bold mb-6">تواصل معنا</h2>
-        <p class="text-slate-500 mb-10">
-            هل لديك استفسار؟ نحن هنا.
+      <div class="bg-white p-8 rounded-2xl border">
+        <h3 class="font-bold text-lg mb-3">متابعة السلات المتروكة</h3>
+        <p class="text-slate-500 text-sm">
+          رسائل ذكية تعيد العميل لإتمام الطلب عبر WhatsApp.
         </p>
+      </div>
 
-        <form class="grid gap-6 max-w-xl">
-            <input type="text" placeholder="الاسم" required
-                   class="border rounded-xl px-4 py-3">
-            <input type="email" placeholder="البريد الإلكتروني" required
-                   class="border rounded-xl px-4 py-3">
-            <textarea rows="4" placeholder="رسالتك" required
-                      class="border rounded-xl px-4 py-3"></textarea>
-            <button class="bg-slate-900 text-white py-3 rounded-xl">
-                إرسال
-            </button>
-        </form>
-    </section>
+      <div class="bg-white p-8 rounded-2xl border">
+        <h3 class="font-bold text-lg mb-3">حالة الطلبات</h3>
+        <p class="text-slate-500 text-sm">
+          العميل يسأل → النظام يجيب تلقائيًا من قاعدة البيانات.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-slate-100 py-10 text-center text-sm text-slate-500">
-        © 2026 AI SaaS — جميع الحقوق محفوظة
-    </footer>
+<!-- ================= CTA ================= -->
+<section class="py-28 text-center">
+  <h2 class="text-3xl md:text-4xl font-bold mb-6">
+    اجعل متجرك يبيع بينما أنت نائم
+  </h2>
+  <p class="text-slate-500 max-w-2xl mx-auto mb-10">
+    أتمتة حقيقية، بدون اشتراكات مغلقة، وبدون فقدان السيطرة على بياناتك.
+  </p>
+  <button class="px-12 py-4 bg-slate-900 text-white rounded-full text-lg font-medium">
+    تواصل معنا الآن
+  </button>
+</section>
 
-</div>
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-slate-100 py-10 text-center text-sm text-slate-500">
+  © 2026 TIXWOO — أتمتة المتاجر الإلكترونية بذكاء
+</footer>
 
-<!-- ============================= -->
-<!-- CHATWOOT — TIXWOO ONLY -->
-<!-- ============================= -->
+<!-- ================= CHATWOOT (TIXWOO ONLY) ================= -->
 <script>
   (function (d, t) {
     var BASE_URL = "https://chatwoot.tixwoo.com";
-
     var g = d.createElement(t),
         s = d.getElementsByTagName(t)[0];
 
