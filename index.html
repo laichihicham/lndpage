@@ -3,313 +3,441 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TIXWOO | نظام أتمتة التجارة الإلكترونية المتكامل</title>
+    <title>TIXWOO Nexus | Expert Automation & E-commerce Systems</title>
 
-    <!-- الخطوط -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-
-    <!-- AOS Animation -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <!-- Font Awesome -->
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-light: #eff6ff;
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-glow: rgba(99, 102, 241, 0.15);
             --secondary: #10b981;
-            --dark: #1e293b;
-            --bg: #ffffff;
-            --section-bg: #f8fafc;
+            --bg: #03040b;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface-hover: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --danger: #ef4444;
+            --card-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
             --border: #e2e8f0;
             --text-main: #0f172a;
             --text-muted: #64748b;
+            --primary: #4f46e5;
+            --primary-glow: rgba(79, 70, 229, 0.05);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
         body {
             background-color: var(--bg);
             color: var(--text-main);
-            font-family: 'Cairo', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
+            transition: background 0.5s ease;
             overflow-x: hidden;
             line-height: 1.6;
         }
 
-        /* تحسينات الخلفية */
-        .bg-gradient {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.03) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 40%);
-            z-index: -1;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* Typography */
+        h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; }
+        .section-tag { color: var(--primary); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem; display: block; }
+        .section-title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 3rem; text-align: center; }
 
         /* Header */
         header {
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            transition: 0.3s; padding: 1.2rem 0;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+            position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
+            width: 95%; max-width: 1100px; z-index: 1000;
+            background: var(--surface); backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 24px;
+            padding: 0.8rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
+            box-shadow: var(--card-shadow);
         }
 
-        .nav-container {
-            max-width: 1200px; margin: 0 auto; padding: 0 2rem;
-            display: flex; justify-content: space-between; align-items: center;
+        .logo { font-size: 1.6rem; font-weight: 900; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
+
+        /* Hero Section */
+        .hero { padding: 180px 0 100px; text-align: center; position: relative; }
+        .hero::before {
+            content: ''; position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+            width: 60%; height: 60%; background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            z-index: -1;
         }
-
-        .logo { font-size: 1.8rem; font-weight: 900; color: var(--primary); text-decoration: none; }
-
-        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
-        .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: 0.3s; }
-        .nav-links a:hover { color: var(--primary); }
-
-        /* Hero */
-        .hero { padding: 180px 2rem 100px; text-align: center; }
-        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; color: var(--dark); line-height: 1.1; margin-bottom: 1.5rem; }
-        .hero h1 span { color: var(--primary); }
-        .hero p { max-width: 700px; margin: 0 auto 2.5rem; font-size: 1.25rem; color: var(--text-muted); }
-
-        /* Stats Bar */
-        .stats-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem; background: white; padding: 3rem; border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.05); border: 1px solid var(--border);
-            margin-top: -60px; position: relative; z-index: 10;
-        }
-        .stat-card { text-align: center; }
-        .stat-card h3 { font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 5px; }
-        .stat-card p { color: var(--text-muted); font-weight: 600; }
-
-        /* التكاملات (Section NEW) */
-        .integration-track {
-            padding: 80px 2rem; background: var(--section-bg); text-align: center; overflow: hidden;
-        }
-        .logos-slide {
-            display: flex; gap: 4rem; justify-content: center; align-items: center;
-            opacity: 0.5; filter: grayscale(1); transition: 0.3s;
-        }
-        .logos-slide:hover { opacity: 1; filter: grayscale(0); }
-        .logos-slide img { height: 40px; }
-
-        /* Comparison Section */
-        .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
-        .compare-card { padding: 3rem; border-radius: 24px; position: relative; }
-        .compare-card.old { background: #fff1f2; border: 1px solid #fecaca; }
-        .compare-card.new { background: #f0fdf4; border: 1px solid #bbf7d0; }
-        .compare-card h4 { font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
-
-        /* Features */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .f-card {
-            padding: 3rem 2rem; border-radius: 24px; background: white;
-            border: 1px solid var(--border); transition: 0.3s;
-        }
-        .f-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); border-color: var(--primary); }
-        .f-icon { width: 60px; height: 60px; background: var(--primary-light); color: var(--primary); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.5rem; }
-
-        /* Pricing */
-        .pricing-card {
-            background: white; padding: 4rem 2.5rem; border-radius: 32px;
-            border: 1px solid var(--border); text-align: center; transition: 0.3s;
-        }
-        .pricing-card.featured { border: 2px solid var(--primary); transform: scale(1.05); box-shadow: 0 30px 60px rgba(79, 70, 229, 0.1); }
-        .price { font-size: 3.5rem; font-weight: 900; margin: 1.5rem 0; color: var(--dark); }
-        .price span { font-size: 1.1rem; color: var(--text-muted); font-weight: 400; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5.5rem); line-height: 1; margin-bottom: 1.5rem; }
+        .hero h1 span { background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { max-width: 750px; margin: 0 auto 2.5rem; color: var(--text-muted); font-size: 1.25rem; font-weight: 400; }
 
         /* Buttons */
-        .btn { padding: 1rem 2.5rem; border-radius: 14px; font-weight: 700; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; border: none; }
-        .btn-p { background: var(--primary); color: white; }
-        .btn-p:hover { background: #4338ca; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2); }
-        .btn-s { background: var(--primary-light); color: var(--primary); }
+        .btn { padding: 0.9rem 1.8rem; border-radius: 14px; font-weight: 700; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: none; font-family: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-size: 1rem; }
+        .btn-p { background: var(--primary); color: white; box-shadow: 0 10px 20px var(--primary-glow); }
+        .btn-p:hover { transform: translateY(-3px); box-shadow: 0 15px 30px var(--primary-glow); filter: brightness(1.1); }
+        .btn-s { background: var(--surface); color: var(--text-main); border: 1px solid var(--border); }
+        .btn-s:hover { background: var(--surface-hover); border-color: var(--primary); }
 
-        /* FAQ */
-        .faq-item { border: 1px solid var(--border); border-radius: 16px; margin-bottom: 1rem; overflow: hidden; background: white; }
-        .faq-head { width: 100%; padding: 1.5rem; text-align: right; background: none; border: none; font-weight: 700; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between; }
-        body[dir="ltr"] .faq-head { text-align: left; }
-        .faq-body { padding: 0 1.5rem; max-height: 0; overflow: hidden; transition: 0.3s ease-out; color: var(--text-muted); }
-
-        /* Chatwoot custom position */
-        .woot-widget-bubble { bottom: 30px !important; right: 30px !important; }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .compare-grid { grid-template-columns: 1fr; }
-            .pricing-card.featured { transform: none; }
+        /* Services Grid */
+        .services-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px; padding: 60px 0;
         }
+        .service-card {
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 3rem 2rem; border-radius: 32px; transition: 0.4s;
+            position: relative; overflow: hidden;
+        }
+        .service-card:hover { border-color: var(--primary); transform: translateY(-10px); background: var(--surface-hover); }
+        .service-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem; display: block; }
+        .service-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .service-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Process Workflow */
+        .process-section { padding: 100px 0; background: rgba(255,255,255,0.01); border-radius: 60px; margin: 40px 0; }
+        .workflow { display: flex; flex-direction: column; gap: 40px; max-width: 800px; margin: 0 auto; position: relative; }
+        .workflow::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--border); transform: translateX(-50%); }
+        [dir="rtl"] .workflow::before { left: auto; right: 50%; transform: translateX(50%); }
+
+        .step { display: flex; justify-content: space-between; align-items: center; width: 100%; position: relative; }
+        .step-content { width: 45%; background: var(--surface); padding: 2rem; border-radius: 24px; border: 1px solid var(--border); }
+        .step-num { width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; z-index: 2; border: 5px solid var(--bg); }
+        .step:nth-child(even) { flex-direction: row-reverse; }
+
+        /* Portfolio/Case Studies */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .project-card { border-radius: 24px; overflow: hidden; background: var(--surface); border: 1px solid var(--border); position: relative; }
+        .project-img { width: 100%; height: 250px; background: linear-gradient(45deg, #1e1b4b, #312e81); display: flex; align-items: center; justify-content: center; font-size: 3rem; opacity: 0.5; }
+        .project-info { padding: 1.5rem; }
+        .project-tag { font-size: 0.75rem; background: var(--primary-glow); color: var(--primary-light); padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+
+        /* Tech Stack */
+        .tech-stack { text-align: center; padding: 80px 0; }
+        .tech-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 40px; opacity: 0.6; grayscale: 100%; transition: 0.3s; }
+        .tech-icons i { font-size: 3rem; transition: 0.3s; }
+        .tech-icons i:hover { grayscale: 0; opacity: 1; color: var(--primary); transform: scale(1.1); }
+
+        /* Testimonials */
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .testi-card { background: var(--surface); padding: 2rem; border-radius: 24px; border-left: 4px solid var(--primary); }
+        [dir="rtl"] .testi-card { border-left: none; border-right: 4px solid var(--primary); }
+
+        /* ROI Calculator - Refined */
+        .roi-box { background: linear-gradient(145deg, var(--surface), rgba(99, 102, 241, 0.05)); border: 1px solid var(--border); border-radius: 40px; padding: 4rem 2rem; text-align: center; margin: 100px 0; }
+        .slider { width: 100%; height: 8px; background: var(--border); border-radius: 10px; appearance: none; margin: 40px 0; outline: none; }
+        .slider::-webkit-slider-thumb { appearance: none; width: 28px; height: 28px; background: var(--primary); border-radius: 50%; cursor: pointer; border: 4px solid var(--bg); box-shadow: 0 0 15px var(--primary-glow); }
+
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
+            header { padding: 0.5rem 1rem; }
+            .workflow::before { display: none; }
+            .step { flex-direction: column !important; text-align: center; gap: 15px; }
+            .step-content { width: 100%; }
+            .hero { padding-top: 140px; }
+        }
+
+        /* Marquee */
+        .marquee { overflow: hidden; white-space: nowrap; padding: 30px 0; border-y: 1px solid var(--border); background: rgba(255,255,255,0.02); margin: 40px 0; }
+        .marquee-content { display: inline-block; animation: scroll 40s linear infinite; }
+        .marquee-content span { margin: 0 40px; font-weight: 800; font-size: 1.2rem; color: var(--text-muted); letter-spacing: 2px; }
+        @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     </style>
 </head>
 <body>
 
-<div class="bg-gradient"></div>
-
 <header>
-    <div class="nav-container">
-        <a href="#" class="logo">TIXWOO</a>
-        <nav class="nav-links">
-            <a href="#features" data-i18n="n-f">المميزات</a>
-            <a href="#how-it-works" data-i18n="n-h">كيف يعمل؟</a>
-            <a href="#pricing" data-i18n="n-p">الأسعار</a>
-            <button class="btn btn-s" onclick="toggleLang()" id="langBtn" style="padding: 8px 16px;">English</button>
-            <a href="#" class="btn btn-p" style="padding: 10px 25px;" data-i18n="n-l">ابدأ الآن</a>
-        </nav>
+    <a href="#" class="logo">TIXWOO<span style="color:var(--text-main)">.</span></a>
+    <div class="nav-actions">
+        <button class="btn btn-s" onclick="toggleTheme()" id="themeBtn" style="padding: 0.5rem 0.8rem;"><i class="fas fa-moon"></i></button>
+        <button class="btn btn-s" onclick="toggleLang()" id="langBtn" style="padding: 0.5rem 0.8rem;">EN</button>
+        <a href="#contact" class="btn btn-p" style="font-size: 0.85rem;" data-i18n="n-start">ابدأ المشروع</a>
     </div>
 </header>
 
-<main>
+<main class="container">
     <!-- Hero Section -->
-    <section class="hero" data-aos="fade-up">
-        <div style="background: var(--primary-light); color: var(--primary); padding: 8px 20px; border-radius: 100px; display: inline-block; font-weight: 700; font-size: 0.9rem; margin-bottom: 20px;" data-i18n="h-badge">🚀 المنصة رقم #1 للأتمتة في الخليج</div>
-        <h1 data-i18n="h-title">حرر تجارتك من <br><span>العمل اليدوي المتعب</span></h1>
-        <p data-i18n="h-desc">TIXWOO تربط متاجرك في سلة وزد وشوبيفاي مع شركات الشحن والأنظمة المحاسبية لتعمل جميعها في تناغم تام وتلقائي.</p>
-        <div style="display: flex; gap: 1rem; justify-content: center;">
-            <a href="#pricing" class="btn btn-p" data-i18n="h-btn1">ابدأ تجربتك المجانية</a>
-            <a href="#" class="btn btn-s" data-i18n="h-btn2">تحدث مع خبير</a>
+    <section class="hero" data-aos="zoom-out-up">
+        <div class="pulse-bar" style="display: inline-flex; align-items: center; gap: 10px; background: var(--surface); padding: 8px 20px; border-radius: 50px; border: 1px solid var(--border); margin-bottom: 2rem; font-size: 0.85rem; color: var(--secondary);">
+            <div style="width: 8px; height: 8px; background: var(--secondary); border-radius: 50%; animation: pulse 1.5s infinite;"></div>
+            <span id="pulseText" data-i18n="p-live">متاح الآن لمشاريع جديدة</span>
+        </div>
+        <h1 data-i18n="h-title">أتمتة ذكية تنقل تجارتك <span>للمستوى التالي</span></h1>
+        <p data-i18n="h-desc">نقوم ببناء أنظمة بيئية رقمية تربط متجرك بذكاء اصطناعي، أنظمة شحن، وبرمجيات محاسبة لتعمل تجارتك تلقائياً 24/7.</p>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a href="#contact" class="btn btn-p" data-i18n="h-btn1">استشارة مجانية</a>
+            <a href="#services" class="btn btn-s" data-i18n="h-btn2">استكشف حلولنا</a>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section style="max-width: 1100px; margin: 0 auto; padding: 0 2rem;">
-        <div class="stats-grid" data-aos="fade-up">
-            <div class="stat-card">
-                <h3>+1M</h3>
-                <p data-i18n="s-1">طلبات مؤتمتة</p>
-            </div>
-            <div class="stat-card">
-                <h3>85%</h3>
-                <p data-i18n="s-2">توفير في الوقت</p>
-            </div>
-            <div class="stat-card">
-                <h3>100%</h3>
-                <p data-i18n="s-3">دقة في البيانات</p>
-            </div>
+    <!-- Partners Marquee -->
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>SALLA</span> <span>ZID</span> <span>SHOPIFY</span> <span>STRIPE</span> <span>ZOHO</span> <span>ODOO</span> <span>DHL</span> <span>ZAPIER</span> <span>MAKE</span> 
+            <span>SALLA</span> <span>ZID</span> <span>SHOPIFY</span> <span>STRIPE</span> <span>ZOHO</span> <span>ODOO</span> <span>DHL</span> <span>ZAPIER</span> <span>MAKE</span>
         </div>
-    </section>
+    </div>
 
-    <!-- Integration Marquee (NEW) -->
-    <section class="integration-track">
-        <p style="margin-bottom: 30px; font-weight: 700; color: var(--text-muted);" data-i18n="i-title">نعمل بتكامل تام مع منصاتك المفضلة</p>
-        <div class="logos-slide">
-            <span style="font-weight: 900; font-size: 1.5rem;">SALLA</span>
-            <span style="font-weight: 900; font-size: 1.5rem;">ZID</span>
-            <span style="font-weight: 900; font-size: 1.5rem;">SHOPIFY</span>
-            <span style="font-weight: 900; font-size: 1.5rem;">ARAMEX</span>
-            <span style="font-weight: 900; font-size: 1.5rem;">SMSA</span>
-            <span style="font-weight: 900; font-size: 1.5rem;">DHL</span>
-        </div>
-    </section>
-
-    <!-- Features -->
-    <section id="features">
-        <div style="text-align: center; margin-bottom: 4rem;">
-            <h2 style="font-size: 2.5rem; font-weight: 800;" data-i18n="f-title">لماذا يختار المحترفون TIXWOO؟</h2>
-        </div>
-        <div class="features-grid">
-            <div class="f-card" data-aos="fade-up">
-                <div class="f-icon"><i class="fas fa-magic"></i></div>
-                <h3 data-i18n="f1-t">أتمتة الطلبات الذكية</h3>
-                <p data-i18n="f1-d">بمجرد وصول الطلب، يتم إرساله لشركة الشحن وتحديث حالة المخزون فوراً دون تدخل بشري.</p>
+    <!-- Services Section -->
+    <section id="services" style="padding: 80px 0;">
+        <span class="section-tag" style="text-align: center;" data-i18n="s-tag">الخدمات المتكاملة</span>
+        <h2 class="section-title" data-i18n="s-title">حلول الأتمتة والمنصات</h2>
+        
+        <div class="services-grid">
+            <div class="service-card" data-aos="fade-up">
+                <i class="fas fa-robot"></i>
+                <h3 data-i18n="s1-t">روبوتات خدمة العملاء AI</h3>
+                <p data-i18n="s1-d">شات بوت ذكي للواتساب والموقع يتعامل مع الاستفسارات، تتبع الطلبات، وإتمام البيع دون تدخل بشري.</p>
             </div>
-            <div class="f-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="f-icon"><i class="fas fa-sync"></i></div>
-                <h3 data-i18n="f2-t">مزامنة المخزون اللحظية</h3>
-                <p data-i18n="f2-d">مخزون واحد لكل متاجرك. إذا تم البيع في مكان، يتم التحديث في كل مكان آخر فوراً.</p>
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-sync"></i>
+                <h3 data-i18n="s2-t">مزامنة المخزون والطلبات</h3>
+                <p data-i18n="s2-d">ربط لحظي بين فروعك، متجرك الإلكتروني، ومستودعاتك لضمان عدم حدوث تضارب في الكميات.</p>
             </div>
-            <div class="f-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="f-icon"><i class="fas fa-file-invoice"></i></div>
-                <h3 data-i18n="f3-t">الربط المحاسبي</h3>
-                <p data-i18n="f3-d">تصدير الفواتير والبيانات المالية لأنظمة المحاسبة (مثل قيود وزوهو) بضغطة زر.</p>
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-bullhorn"></i>
+                <h3 data-i18n="s3-t">أتمتة التسويق الذكي</h3>
+                <p data-i18n="s3-d">إعادة استهداف السلال المتروكة آلياً عبر SMS و واتساب بناءً على سلوك العميل لزيادة مبيعاتك.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <h3 data-i18n="s4-t">الربط المالي (ERP)</h3>
+                <p data-i18n="s4-d">تصدير الفواتير والقيود المحاسبية تلقائياً إلى Zoho و QuickBooks بمجرد إتمام الطلب.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-truck-fast"></i>
+                <h3 data-i18n="s5-t">لوجستيات ذكية</h3>
+                <p data-i18n="s5-d">توليد بوالص الشحن واختيار أرخص شركة شحن متوفرة تلقائياً بناءً على وزن الطلب ووجهته.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-chart-pie"></i>
+                <h3 data-i18n="s6-t">تحليل البيانات اللحظي</h3>
+                <p data-i18n="s6-d">لوحة تحكم مركزية تعرض لك أرباحك الصافية، تكاليف الإعلانات، وعائد الاستثمار في مكان واحد.</p>
             </div>
         </div>
     </section>
 
-    <!-- Comparison -->
-    <section id="how-it-works" style="background: var(--section-bg); border-radius: 60px; margin: 0 1rem;">
-        <div style="max-width: 1000px; margin: 0 auto; padding: 100px 0;">
-            <h2 style="text-align: center; margin-bottom: 3rem; font-size: 2.5rem;" data-i18n="c-title">التجربة قبل وبعد TIXWOO</h2>
-            <div class="compare-grid">
-                <div class="compare-card old" data-aos="fade-right">
-                    <h4 style="color: #e11d48;"><i class="fas fa-times-circle"></i> <span data-i18n="c-old-t">بالطريقة اليدوية</span></h4>
-                    <ul style="list-style: none; color: #991b1b;">
-                        <li data-i18n="c-old-1">● إدخال بيانات العملاء يدوياً.</li>
-                        <li data-i18n="c-old-2">● أخطاء متكررة في عناوين الشحن.</li>
-                        <li data-i18n="c-old-3">● ضياع ساعات في تحديث المخزون.</li>
-                    </ul>
+    <!-- Workflow Section -->
+    <section class="process-section">
+        <span class="section-tag" style="text-align: center;" data-i18n="w-tag">كيف نعمل؟</span>
+        <h2 class="section-title" data-i18n="w-title">خطوات رحلة التحول الرقمي</h2>
+        
+        <div class="workflow">
+            <div class="step" data-aos="fade-right">
+                <div class="step-content">
+                    <h3 data-i18n="w1-t">1. التحليل والتدقيق</h3>
+                    <p data-i18n="w1-d">ندرس دورتك التشغيلية الحالية ونحدد نقاط الهدر الزمني والمالي التي يمكن أتمتتها.</p>
                 </div>
-                <div class="compare-card new" data-aos="fade-left">
-                    <h4 style="color: #16a34a;"><i class="fas fa-check-circle"></i> <span data-i18n="c-new-t">مع TIXWOO</span></h4>
-                    <ul style="list-style: none; color: #166534;">
-                        <li data-i18n="c-new-1">● كل شيء يتم آلياً في ثوانٍ.</li>
-                        <li data-i18n="c-new-2">● دقة 100% في بيانات الشحن.</li>
-                        <li data-i18n="c-new-3">● تركيز كامل على نمو مبيعاتك.</li>
-                    </ul>
+                <div class="step-num">1</div>
+                <div style="width: 45%;"></div>
+            </div>
+            <div class="step" data-aos="fade-left">
+                <div style="width: 45%;"></div>
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h3 data-i18n="w2-t">2. بناء الهيكلية</h3>
+                    <p data-i18n="w2-d">تصميم مخطط الربط (Integration Map) بين المنصات المختلفة لضمان تدفق البيانات بسلاسة.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="pricing">
-        <h2 style="text-align: center; margin-bottom: 4rem; font-size: 2.5rem;" data-i18n="p-title">خطط تناسب حجم أعمالك</h2>
-        <div class="features-grid">
-            <div class="pricing-card" data-aos="fade-up">
-                <h3 data-i18n="p1-t">الأساسية</h3>
-                <div class="price">$29<span>/mo</span></div>
-                <p style="color: var(--text-muted); margin-bottom: 2rem;" data-i18n="p1-d">للمتاجر الجديدة</p>
-                <a href="#" class="btn btn-s" style="width: 100%; justify-content: center;" data-i18n="p-btn">ابدأ الآن</a>
-            </div>
-            <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="100">
-                <div style="background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; margin-bottom: 1rem; display: inline-block;" data-i18n="p-popular">الأكثر طلباً</div>
-                <h3 data-i18n="p2-t">الاحترافية</h3>
-                <div class="price">$99<span>/mo</span></div>
-                <p style="color: var(--text-muted); margin-bottom: 2rem;" data-i18n="p2-d">للمتاجر المتوسعة</p>
-                <a href="#" class="btn btn-p" style="width: 100%; justify-content: center;" data-i18n="p-btn">ابدأ الآن</a>
-            </div>
-            <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
-                <h3 data-i18n="p3-t">المؤسسات</h3>
-                <div class="price" data-i18n="p3-p">مخصص</div>
-                <p style="color: var(--text-muted); margin-bottom: 2rem;" data-i18n="p3-d">حلول ضخمة مخصصة</p>
-                <a href="#" class="btn btn-s" style="width: 100%; justify-content: center;" data-i18n="p-btn-c">تواصل معنا</a>
+            <div class="step" data-aos="fade-right">
+                <div class="step-content">
+                    <h3 data-i18n="w3-t">3. التنفيذ والاختبار</h3>
+                    <p data-i18n="w3-d">تفعيل السيناريوهات المؤتمتة وإجراء اختبارات صارمة لضمان دقة العمليات 100%.</p>
+                </div>
+                <div class="step-num">3</div>
+                <div style="width: 45%;"></div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section style="max-width: 800px; margin: 0 auto;">
-        <h2 style="text-align: center; margin-bottom: 3rem;" data-i18n="faq-title">الأسئلة الشائعة</h2>
-        <div class="faq-item">
-            <button class="faq-head" onclick="toggleFaq(this)">
-                <span data-i18n="q1">هل أحتاج لخبرة برمجية لاستخدام TIXWOO؟</span>
-                <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-body">
-                <p data-i18n="a1">أبداً! المنصة مصممة لتكون سهلة الاستخدام (Plug & Play)، يمكنك الربط بضغطة زر واحدة.</p>
+    <!-- Portfolio Gallery -->
+    <section id="portfolio" style="padding: 80px 0;">
+        <span class="section-tag" data-i18n="p-tag">معرض الأعمال</span>
+        <h2 class="section-title" style="text-align: left;" data-i18n="p-title">نجاحات الأتمتة</h2>
+        
+        <div class="portfolio-grid">
+            <div class="project-card" data-aos="fade-up">
+                <div class="project-img"><i class="fas fa-shopping-bag"></i></div>
+                <div class="project-info">
+                    <span class="project-tag" data-i18n="p1-tag">قطاع التجزئة</span>
+                    <h3 data-i18n="p1-t">براند أزياء عالمي</h3>
+                    <p data-i18n="p1-d">أتمتة كاملة لـ 15,000 طلب شهرياً مع ربط المخزون بين سلة و 4 مستودعات فعلية.</p>
+                </div>
+            </div>
+            <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="project-img"><i class="fas fa-utensils"></i></div>
+                <div class="project-info">
+                    <span class="project-tag" data-i18n="p2-tag">SaaS</span>
+                    <h3 data-i18n="p2-t">منصة اشتراكات رقمية</h3>
+                    <p data-i18n="p2-d">بناء نظام دفع ذكي وإرسال التراخيص آلياً عبر الواتساب فور الدفع.</p>
+                </div>
             </div>
         </div>
-        <div class="faq-item">
-            <button class="faq-head" onclick="toggleFaq(this)">
-                <span data-i18n="q2">ما هي المنصات التي تدعمونها؟</span>
-                <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-body">
-                <p data-i18n="a2">ندعم سلة، زد، شوبيفاي، ووكومرس، ومعظم شركات الشحن الكبرى في المنطقة.</p>
+    </section>
+
+    <!-- ROI Calculator -->
+    <section class="roi-box" data-aos="zoom-in">
+        <h2 data-i18n="r-t">احسب وفرك التشغيلي</h2>
+        <p style="color:var(--text-muted); margin-bottom: 20px;" data-i18n="r-d">كم عدد الطلبات التي تعالجها شهرياً؟</p>
+        <input type="range" min="50" max="5000" value="300" class="slider" id="roiSlider">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px; margin-top: 20px;">
+            <div>
+                <p style="font-size: 0.9rem; color:var(--text-muted);" data-i18n="r-h">ساعات عمل موفرة</p>
+                <h4 id="hoursVal" style="font-size: 3rem; color:var(--primary);">30</h4>
+            </div>
+            <div>
+                <p style="font-size: 0.9rem; color:var(--text-muted);" data-i18n="r-m">تكلفة بشرية مستردة</p>
+                <h4 id="moneyVal" style="font-size: 3rem; color:var(--secondary);">$600</h4>
             </div>
         </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="tech-stack">
+        <span class="section-tag" data-i18n="t-tag">التقنيات المستخدمة</span>
+        <div class="tech-icons">
+            <i class="fab fa-shopify" title="Shopify"></i>
+            <i class="fab fa-wordpress" title="WooCommerce"></i>
+            <i class="fab fa-whatsapp" title="WhatsApp Business API"></i>
+            <i class="fab fa-aws" title="AWS"></i>
+            <i class="fab fa-node-js" title="NodeJS"></i>
+            <i class="fab fa-python" title="Python AI"></i>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="roi-box" id="contact" style="background: var(--surface);" data-aos="fade-up">
+        <h2 style="margin-bottom: 1rem;" data-i18n="c-t">هل أنت مستعد للأتمتة؟</h2>
+        <p style="color:var(--text-muted); margin-bottom: 2.5rem;" data-i18n="c-d">احجز جلسة استشارية مدتها 15 دقيقة لمناقشة مشروعك.</p>
+        <form id="nexusForm" style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+            <input type="text" style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 1.2rem; border-radius: 15px; color: var(--text-main); outline: none;" data-i18n-placeholder="p-name" placeholder="الاسم الكامل">
+            <input type="email" style="width: 100%; background: var(--bg); border: 1px solid var(--border); padding: 1.2rem; border-radius: 15px; color: var(--text-main); outline: none;" data-i18n-placeholder="p-email" placeholder="البريد الإلكتروني">
+            <button type="submit" class="btn btn-p" style="width: 100%; justify-content: center;" data-i18n="c-btn">إرسال طلب الاستشارة</button>
+        </form>
     </section>
 </main>
 
-<footer style="padding: 5rem 2rem; border-top: 1px solid var(--border); margin-top: 5rem; text-align: center;">
-    <h2 style="color: var(--primary); font-weight: 900; margin-bottom: 1rem;">TIXWOO</h2>
-    <p style="color: var(--text-muted); margin-bottom: 2rem;" data-i18n="f-desc">مستقبل أتمتة التجارة الإلكترونية بين يديك.</p>
-    <div style="display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 2rem;">
-        <a href="#" style="color: var(--text-muted);"><i class="fab fa-twitter"></i></a>
-        <a href="#" style="color: var(--text-muted);"><i class="fab fa-linkedin"></i></a>
-        <a href="#" style="color: var(--text-muted);"><i class="fab fa-instagram"></i></a>
-    </div>
-    <p style="font-size: 0.9rem; color: var(--text-muted);">© 2026 TIXWOO Automation. All rights reserved.</p>
+<footer style="padding: 60px 0; text-align: center; border-top: 1px solid var(--border); margin-top: 100px;">
+    <div class="logo" style="justify-content: center; margin-bottom: 20px;">TIXWOO.</div>
+    <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="footer">© 2026 TIXWOO Automation Studios. All rights reserved.</p>
 </footer>
 
-<!-- Chatwoot -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true, easing: 'ease-out-quad' });
+
+    // Theme Toggle
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.querySelector("#themeBtn i");
+        const isDark = body.getAttribute("data-theme") !== "light";
+        body.setAttribute("data-theme", isDark ? "light" : "dark");
+        icon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+    }
+
+    // ROI Calculator logic
+    const slider = document.getElementById('roiSlider');
+    const hVal = document.getElementById('hoursVal');
+    const mVal = document.getElementById('moneyVal');
+
+    slider.addEventListener('input', (e) => {
+        const v = e.target.value;
+        hVal.innerText = Math.floor(v * 0.1);
+        mVal.innerText = "$" + (v * 2).toLocaleString();
+    });
+
+    // Translation Data
+    const i18n = {
+        ar: {
+            "n-start": "ابدأ المشروع", "p-live": "متاح الآن لمشاريع جديدة",
+            "h-title": "أتمتة ذكية تنقل تجارتك <span>للمستوى التالي</span>",
+            "h-desc": "نقوم ببناء أنظمة بيئية رقمية تربط متجرك بذكاء اصطناعي، أنظمة شحن، وبرمجيات محاسبة لتعمل تجارتك تلقائياً 24/7.",
+            "h-btn1": "استشارة مجانية", "h-btn2": "استكشف حلولنا",
+            "s-tag": "الخدمات المتكاملة", "s-title": "حلول الأتمتة والمنصات",
+            "s1-t": "روبوتات خدمة العملاء AI", "s1-d": "شات بوت ذكي للواتساب والموقع يتعامل مع الاستفسارات وإتمام البيع دون تدخل بشري.",
+            "s2-t": "مزامنة المخزون والطلبات", "s2-d": "ربط لحظي بين فروعك، متجرك الإلكتروني، ومستودعاتك لضمان عدم حدوث تضارب في الكميات.",
+            "s3-t": "أتمتة التسويق الذكي", "s3-d": "إعادة استهداف السلال المتروكة آلياً عبر SMS و واتساب بناءً على سلوك العميل لزيادة مبيعاتك.",
+            "s4-t": "الربط المالي (ERP)", "s4-d": "تصدير الفواتير والقيود المحاسبية تلقائياً إلى Zoho و QuickBooks بمجرد إتمام الطلب.",
+            "s5-t": "لوجستيات ذكية", "s5-d": "توليد بوالص الشحن واختيار أرخص شركة شحن متوفرة تلقائياً بناءً على وزن الطلب ووجهته.",
+            "s6-t": "تحليل البيانات اللحظي", "s6-d": "لوحة تحكم مركزية تعرض لك أرباحك الصافية، تكاليف الإعلانات، وعائد الاستثمار في مكان واحد.",
+            "w-tag": "كيف نعمل؟", "w-title": "خطوات رحلة التحول الرقمي",
+            "w1-t": "1. التحليل والتدقيق", "w1-d": "ندرس دورتك التشغيلية الحالية ونحدد نقاط الهدر الزمني والمالي التي يمكن أتمتتها.",
+            "w2-t": "2. بناء الهيكلية", "w2-d": "تصميم مخطط الربط (Integration Map) بين المنصات المختلفة لضمان تدفق البيانات بسلاسة.",
+            "w3-t": "3. التنفيذ والاختبار", "w3-d": "تفعيل السيناريوهات المؤتمتة وإجراء اختبارات صارمة لضمان دقة العمليات 100%.",
+            "p-tag": "معرض الأعمال", "p-title": "نجاحات الأتمتة",
+            "p1-tag": "قطاع التجزئة", "p1-t": "براند أزياء عالمي", "p1-d": "أتمتة كاملة لـ 15,000 طلب شهرياً مع ربط المخزون بين سلة و 4 مستودعات فعلية.",
+            "p2-tag": "SaaS", "p2-t": "منصة اشتراكات رقمية", "p2-d": "بناء نظام دفع ذكي وإرسال التراخيص آلياً عبر الواتساب فور الدفع.",
+            "r-t": "احسب وفرك التشغيلي", "r-d": "كم عدد الطلبات التي تعالجها شهرياً؟",
+            "r-h": "ساعات عمل موفرة", "r-m": "تكلفة بشرية مستردة",
+            "t-tag": "التقنيات المستخدمة", "c-t": "هل أنت مستعد للأتمتة؟", "c-d": "احجز جلسة استشارية مدتها 15 دقيقة لمناقشة مشروعك.",
+            "p-name": "الاسم الكامل", "p-email": "البريد الإلكتروني", "c-btn": "إرسال طلب الاستشارة",
+            "footer": "© 2026 TIXWOO Automation Studios. جميع الحقوق محفوظة."
+        },
+        en: {
+            "n-start": "Start Project", "p-live": "Available for new projects",
+            "h-title": "Smart Automation to Scale <span>Your Business</span>",
+            "h-desc": "We build digital ecosystems that connect your store with AI, shipping, and accounting tools so your business runs 24/7.",
+            "h-btn1": "Free Consultation", "h-btn2": "Explore Solutions",
+            "s-tag": "Integrated Services", "s-title": "Automation & Platform Solutions",
+            "s1-t": "AI Customer Bots", "s1-d": "Smart bots for WhatsApp & Web to handle inquiries and sales without human intervention.",
+            "s2-t": "Inventory Sync", "s2-d": "Real-time sync between branches, online stores, and warehouses to prevent stock-outs.",
+            "s3-t": "Marketing Automation", "s3-d": "Auto-target abandoned carts via SMS & WhatsApp based on customer behavior to boost sales.",
+            "s4-t": "ERP Integration", "s4-d": "Auto-export invoices and accounting entries to Zoho or QuickBooks instantly.",
+            "s5-t": "Smart Logistics", "s5-d": "Generate labels and choose the cheapest carrier automatically based on weight and destination.",
+            "s6-t": "Real-time Analytics", "s6-d": "Centralized dashboard showing net profit, ad costs, and ROI in one place.",
+            "w-tag": "Process", "w-title": "Digital Transformation Roadmap",
+            "w1-t": "1. Audit & Analysis", "w1-d": "We study your current workflow to identify time and money leaks that can be automated.",
+            "w2-t": "2. Structural Design", "def w2-d": "Designing the integration map between different platforms for seamless data flow.",
+            "w3-t": "3. Deploy & Test", "w3-d": "Activating automated scenarios with rigorous testing to ensure 100% accuracy.",
+            "p-tag": "Portfolio", "p-title": "Automation Wins",
+            "p1-tag": "Retail Sector", "p1-t": "Global Fashion Brand", "p1-d": "Full automation of 15,000 monthly orders with inventory sync across 4 warehouses.",
+            "p2-tag": "SaaS", "p2-t": "Digital Subscription Platform", "p2-d": "Built smart payment flows and automated license delivery via WhatsApp.",
+            "r-t": "Calculate Your ROI", "r-d": "How many orders do you process monthly?",
+            "r-h": "Hours Saved", "r-m": "HR Costs Saved",
+            "t-tag": "Tech Stack", "c-t": "Ready to Automate?", "c-d": "Book a 15-minute consultation to discuss your project.",
+            "p-name": "Full Name", "p-email": "Email Address", "c-btn": "Send Request",
+            "footer": "© 2026 TIXWOO Automation Studios. All rights reserved."
+        }
+    };
+
+    let currentLang = 'ar';
+    function toggleLang() {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        document.documentElement.lang = currentLang;
+        document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        document.getElementById('langBtn').innerText = currentLang === 'ar' ? 'EN' : 'AR';
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (i18n[currentLang][key]) el.innerHTML = i18n[currentLang][key];
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (i18n[currentLang][key]) el.placeholder = i18n[currentLang][key];
+        });
+    }
+
+    // Dynamic Live Updates
+    const pulseText = document.getElementById('pulseText');
+    const updates = {
+        ar: ["متاح لمشاريع جديدة", "تم ربط 50+ متجر هذا الشهر", "تحديث: دعم AI للواتساب مفعل"],
+        en: ["Available for new projects", "50+ Stores synced this month", "Update: AI WhatsApp support active"]
+    };
+    let uIdx = 0;
+    setInterval(() => {
+        pulseText.innerText = updates[currentLang][uIdx];
+        uIdx = (uIdx + 1) % updates[currentLang].length;
+    }, 4000);
+</script>
+
+<!-- Chatwoot Integration -->
 <script>
   (function(d,t) {
     var BASE_URL="https://chatwoot.tixwoo.com";
@@ -324,90 +452,6 @@
       })
     }
   })(document,"script");
-</script>
-
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    AOS.init({ duration: 800, once: true });
-
-    function toggleFaq(btn) {
-        const body = btn.nextElementSibling;
-        const icon = btn.querySelector('i');
-        if (body.style.maxHeight) {
-            body.style.maxHeight = null;
-            icon.style.transform = "rotate(0deg)";
-        } else {
-            body.style.maxHeight = body.scrollHeight + "px";
-            icon.style.transform = "rotate(180deg)";
-        }
-    }
-
-    const i18n = {
-        ar: {
-            "n-f": "المميزات", "n-h": "كيف يعمل؟", "n-p": "الأسعار", "n-l": "ابدأ الآن",
-            "h-badge": "🚀 المنصة رقم #1 للأتمتة في الخليج",
-            "h-title": "حرر تجارتك من العمل اليدوي المتعب",
-            "h-desc": "TIXWOO تربط متاجرك في سلة وزد وشوبيفاي مع شركات الشحن والأنظمة المحاسبية لتعمل جميعها في تناغم تام وتلقائي.",
-            "h-btn1": "ابدأ تجربتك المجانية", "h-btn2": "تحدث مع خبير",
-            "s-1": "طلبات مؤتمتة", "s-2": "توفير في الوقت", "s-3": "دقة في البيانات",
-            "i-title": "نعمل بتكامل تام مع منصاتك المفضلة",
-            "f-title": "لماذا يختار المحترفون TIXWOO؟",
-            "f1-t": "أتمتة الطلبات الذكية", "f1-d": "بمجرد وصول الطلب، يتم إرساله لشركة الشحن وتحديث حالة المخزون فوراً.",
-            "f2-t": "مزامنة المخزون اللحظية", "f2-d": "مخزون واحد لكل متاجرك. إذا تم البيع في مكان، يتم التحديث في كل مكان فوراً.",
-            "f3-t": "الربط المحاسبي", "f3-d": "تصدير الفواتير والبيانات المالية لأنظمة المحاسبة بضغطة زر.",
-            "c-title": "التجربة قبل وبعد TIXWOO",
-            "c-old-t": "بالطريقة اليدوية", "c-new-t": "مع TIXWOO",
-            "c-old-1": "● إدخال بيانات العملاء يدوياً.", "c-old-2": "● أخطاء متكررة في العناوين.", "c-old-3": "● ضياع ساعات في التحديث.",
-            "c-new-1": "● كل شيء يتم آلياً في ثوانٍ.", "c-new-2": "● دقة 100% في البيانات.", "c-new-3": "● تركيز كامل على النمو.",
-            "p-title": "خطط تناسب حجم أعمالك",
-            "p1-t": "الأساسية", "p1-d": "للمتاجر الجديدة",
-            "p2-t": "الاحترافية", "p2-d": "للمتاجر المتوسعة",
-            "p-popular": "الأكثر طلباً", "p3-t": "المؤسسات", "p3-p": "مخصص", "p3-d": "حلول مخصصة",
-            "p-btn": "ابدأ الآن", "p-btn-c": "تواصل معنا",
-            "faq-title": "الأسئلة الشائعة",
-            "q1": "هل أحتاج لخبرة برمجية؟", "a1": "أبداً! المنصة مصممة لتكون سهلة الاستخدام بضغطة زر واحدة.",
-            "q2": "ما هي المنصات المدعومة؟", "a2": "سلة، زد، شوبيفاي، ووكومرس، وشركات الشحن الكبرى.",
-            "f-desc": "مستقبل أتمتة التجارة الإلكترونية بين يديك."
-        },
-        en: {
-            "n-f": "Features", "n-h": "How it works", "n-p": "Pricing", "n-l": "Get Started",
-            "h-badge": "🚀 #1 Automation Platform in GCC",
-            "h-title": "Free Your Business from Manual Work",
-            "h-desc": "TIXWOO connects your Salla, Zid, and Shopify stores with shipping and accounting systems to work in perfect harmony.",
-            "h-btn1": "Start Free Trial", "h-btn2": "Talk to Expert",
-            "s-1": "Automated Orders", "s-2": "Time Saved", "s-3": "Data Accuracy",
-            "i-title": "Seamlessly integrated with your favorite platforms",
-            "f-title": "Why Professionals Choose TIXWOO?",
-            "f1-t": "Smart Order Automation", "f1-d": "Orders are sent to shipping and inventory is updated instantly upon purchase.",
-            "f2-t": "Real-time Sync", "f2-d": "One inventory for all stores. Sell once, update everywhere instantly.",
-            "f3-t": "Accounting Integration", "f3-d": "Export invoices and financial data to accounting systems with one click.",
-            "c-title": "Experience Before & After TIXWOO",
-            "c-old-t": "The Manual Way", "c-new-t": "With TIXWOO",
-            "c-old-1": "● Manual data entry for every order.", "c-old-2": "● Frequent shipping address errors.", "c-old-3": "● Hours lost in inventory updates.",
-            "c-new-1": "● Everything automated in seconds.", "c-new-2": "● 100% data accuracy always.", "c-new-3": "● Full focus on scaling sales.",
-            "p-title": "Plans That Scale With You",
-            "p1-t": "Basic", "p1-d": "For new stores",
-            "p2-t": "Professional", "p2-d": "For growing stores",
-            "p-popular": "Most Popular", "p3-t": "Enterprise", "p3-p": "Custom", "p3-d": "Custom solutions",
-            "p-btn": "Get Started", "p-btn-c": "Contact Us",
-            "faq-title": "Frequently Asked Questions",
-            "q1": "Do I need coding skills?", "a1": "Not at all! The platform is Plug & Play, connect with one click.",
-            "q2": "Which platforms are supported?", "a2": "Salla, Zid, Shopify, WooCommerce, and major shipping carriers.",
-            "f-desc": "The future of e-commerce automation is here."
-        }
-    };
-
-    let currentLang = 'ar';
-    function toggleLang() {
-        currentLang = currentLang === 'ar' ? 'en' : 'ar';
-        document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-        document.getElementById('langBtn').innerText = currentLang === 'ar' ? 'English' : 'العربية';
-        
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (i18n[currentLang][key]) el.innerText = i18n[currentLang][key];
-        });
-    }
 </script>
 
 </body>
