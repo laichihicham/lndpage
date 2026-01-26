@@ -12,9 +12,10 @@
 
     <style>
         :root {
+            /* Dark Mode Colors */
             --primary: #6366f1;
             --primary-light: #818cf8;
-            --primary-glow: rgba(99, 102, 241, 0.15);
+            --primary-glow: rgba(99, 102, 241, 0.25);
             --secondary: #10b981;
             --bg: #03040b;
             --surface: rgba(255, 255, 255, 0.03);
@@ -24,17 +25,32 @@
             --text-muted: #94a3b8;
             --danger: #ef4444;
             --card-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            --icon-color: #6366f1;
+            --widget-bg: rgba(99, 102, 241, 0.03);
+            
+            /* Portfolio Specific - Dark */
+            --proj-bg: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            --proj-icon: #ffffff;
         }
 
         [data-theme="light"] {
+            /* Light Mode Colors */
             --bg: #f8fafc;
             --surface: #ffffff;
             --surface-hover: #f1f5f9;
-            --border: #e2e8f0;
+            --border: #cbd5e1;
             --text-main: #0f172a;
-            --text-muted: #64748b;
+            --text-muted: #475569;
             --primary: #4f46e5;
-            --primary-glow: rgba(79, 70, 229, 0.05);
+            --primary-light: #4338ca;
+            --primary-glow: rgba(79, 70, 229, 0.1);
+            --icon-color: #4f46e5;
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --widget-bg: #f1f5f9;
+
+            /* Portfolio Specific - Light */
+            --proj-bg: linear-gradient(135deg, #e0e7ff 0%, #eff6ff 100%);
+            --proj-icon: #4f46e5;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -43,7 +59,7 @@
             background-color: var(--bg);
             color: var(--text-main);
             font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
-            transition: background 0.5s ease;
+            transition: background 0.5s ease, color 0.5s ease;
             overflow-x: hidden;
             line-height: 1.6;
         }
@@ -52,8 +68,8 @@
 
         /* Typography */
         h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; }
-        .section-tag { color: var(--primary); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem; display: block; }
-        .section-title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 3rem; text-align: center; }
+        .section-tag { color: var(--primary); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+        .section-title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 2rem; text-align: center; }
 
         /* Header */
         header {
@@ -63,13 +79,20 @@
             border: 1px solid var(--border); border-radius: 24px;
             padding: 0.8rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
             box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
         }
 
-        .logo { font-size: 1.6rem; font-weight: 900; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-        .nav-actions { display: flex; gap: 12px; align-items: center; }
+        .logo { font-size: 1.6rem; font-weight: 900; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        
+        /* New Navigation Menu */
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.95rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .nav-actions { display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
 
         /* Hero Section */
-        .hero { padding: 180px 0 100px; text-align: center; position: relative; }
+        .hero { padding: 160px 0 60px; text-align: center; position: relative; } /* Reduced padding */
         .hero::before {
             content: ''; position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
             width: 60%; height: 60%; background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
@@ -89,7 +112,7 @@
         /* Services Grid */
         .services-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px; padding: 60px 0;
+            gap: 24px; padding: 40px 0; /* Reduced padding */
         }
         .service-card {
             background: var(--surface); border: 1px solid var(--border);
@@ -97,55 +120,121 @@
             position: relative; overflow: hidden;
         }
         .service-card:hover { border-color: var(--primary); transform: translateY(-10px); background: var(--surface-hover); }
-        .service-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem; display: block; }
+        
+        .service-card i { 
+            font-size: 2.5rem; 
+            color: var(--icon-color); 
+            margin-bottom: 1.5rem; 
+            display: block; 
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .service-card:hover i { transform: scale(1.1); }
         .service-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
         .service-card p { color: var(--text-muted); font-size: 0.95rem; }
 
         /* Process Workflow */
-        .process-section { padding: 100px 0; background: rgba(255,255,255,0.01); border-radius: 60px; margin: 40px 0; }
-        .workflow { display: flex; flex-direction: column; gap: 40px; max-width: 800px; margin: 0 auto; position: relative; }
+        .process-section { padding: 60px 0; background: rgba(255,255,255,0.01); border-radius: 60px; margin: 20px 0; } /* Reduced spacing */
+        .workflow { display: flex; flex-direction: column; gap: 40px; max-width: 900px; margin: 0 auto; position: relative; } /* Reduced gap */
         .workflow::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--border); transform: translateX(-50%); }
         [dir="rtl"] .workflow::before { left: auto; right: 50%; transform: translateX(50%); }
 
         .step { display: flex; justify-content: space-between; align-items: center; width: 100%; position: relative; }
-        .step-content { width: 45%; background: var(--surface); padding: 2rem; border-radius: 24px; border: 1px solid var(--border); }
-        .step-num { width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; z-index: 2; border: 5px solid var(--bg); }
+        
+        .step-content { width: 42%; background: var(--surface); padding: 2rem; border-radius: 24px; border: 1px solid var(--border); z-index: 1; transition: 0.3s; }
+        .step-content:hover { border-color: var(--primary); transform: translateY(-5px); }
+
+        .step-num { width: 50px; height: 50px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; z-index: 2; border: 5px solid var(--bg); color: #fff; box-shadow: 0 0 15px var(--primary-glow); }
+        
+        /* Visual Widgets */
+        .step-visual { width: 42%; display: flex; justify-content: center; align-items: center; height: 180px; position: relative; }
+        .visual-card {
+            width: 100%; height: 100%;
+            background: var(--widget-bg);
+            border: 1px dashed var(--border);
+            border-radius: 20px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: relative; overflow: hidden;
+            transition: 0.3s;
+        }
+        .visual-card:hover { border-color: var(--secondary); background: var(--surface-hover); }
+
+        /* Widget 1: Analysis Bars */
+        .bars-container { display: flex; gap: 8px; align-items: flex-end; height: 60px; }
+        .v-bar { width: 10px; background: var(--text-muted); border-radius: 4px; opacity: 0.3; animation: barUp 2s infinite ease-in-out alternate; }
+        .v-bar:nth-child(1) { height: 30%; animation-delay: 0s; }
+        .v-bar:nth-child(2) { height: 50%; animation-delay: 0.2s; background: var(--primary); opacity: 0.8; }
+        .v-bar:nth-child(3) { height: 80%; animation-delay: 0.4s; background: var(--primary); opacity: 1; }
+        .v-bar:nth-child(4) { height: 40%; animation-delay: 0.1s; }
+        @keyframes barUp { 0% { transform: scaleY(0.8); } 100% { transform: scaleY(1.2); } }
+
+        /* Widget 2: Nodes */
+        .nodes-container { position: relative; width: 100px; height: 60px; }
+        .node-dot { width: 12px; height: 12px; background: var(--secondary); border-radius: 50%; position: absolute; box-shadow: 0 0 10px var(--secondary); }
+        .node-line { height: 2px; background: var(--border); position: absolute; top: 5px; width: 100%; transform-origin: left; }
+        .n1 { left: 0; top: 0; }
+        .n2 { right: 0; bottom: 0; background: var(--primary); box-shadow: 0 0 10px var(--primary); }
+        .n-line { top: 6px; left: 6px; width: 105px; transform: rotate(30deg); background: linear-gradient(90deg, var(--secondary), var(--primary)); }
+
+        /* Widget 3: Terminal */
+        .terminal-box { width: 80%; background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 12px; font-family: monospace; font-size: 0.8rem; }
+        .term-line { display: block; margin-bottom: 5px; }
+        .success-txt { color: var(--secondary); }
+        .blink { animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
         .step:nth-child(even) { flex-direction: row-reverse; }
 
-        /* Portfolio/Case Studies */
+        /* Portfolio/Case Studies - Improved */
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
         .project-card { border-radius: 24px; overflow: hidden; background: var(--surface); border: 1px solid var(--border); position: relative; }
-        .project-img { width: 100%; height: 250px; background: linear-gradient(45deg, #1e1b4b, #312e81); display: flex; align-items: center; justify-content: center; font-size: 3rem; opacity: 0.5; }
+        
+        /* Dynamic Project Image/Icon Background */
+        .project-img { 
+            width: 100%; height: 250px; 
+            background: var(--proj-bg); /* Dynamic Variable */
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 3rem; 
+            transition: 0.3s;
+        }
+        
+        /* Dynamic Icon inside Project */
+        .project-img i {
+            color: var(--proj-icon); /* Dynamic Variable */
+            transition: 0.3s ease;
+        }
+
+        .project-card:hover .project-img { opacity: 0.9; }
+        .project-card:hover .project-img i { transform: scale(1.2); }
+        
         .project-info { padding: 1.5rem; }
         .project-tag { font-size: 0.75rem; background: var(--primary-glow); color: var(--primary-light); padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
 
         /* Tech Stack */
-        .tech-stack { text-align: center; padding: 80px 0; }
-        .tech-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 40px; opacity: 0.6; grayscale: 100%; transition: 0.3s; }
-        .tech-icons i { font-size: 3rem; transition: 0.3s; }
-        .tech-icons i:hover { grayscale: 0; opacity: 1; color: var(--primary); transform: scale(1.1); }
-
-        /* Testimonials */
-        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .testi-card { background: var(--surface); padding: 2rem; border-radius: 24px; border-left: 4px solid var(--primary); }
-        [dir="rtl"] .testi-card { border-left: none; border-right: 4px solid var(--primary); }
+        .tech-stack { text-align: center; padding: 50px 0; } /* Reduced padding */
+        .tech-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 30px; opacity: 0.7; transition: 0.3s; }
+        .tech-icons i { font-size: 3rem; transition: all 0.3s ease; color: var(--text-muted); }
+        .tech-icons i:hover { opacity: 1; color: var(--icon-color); transform: scale(1.1) rotate(5deg); text-shadow: 0 0 20px var(--primary-glow); }
 
         /* ROI Calculator - Refined */
-        .roi-box { background: linear-gradient(145deg, var(--surface), rgba(99, 102, 241, 0.05)); border: 1px solid var(--border); border-radius: 40px; padding: 4rem 2rem; text-align: center; margin: 100px 0; }
+        .roi-box { background: linear-gradient(145deg, var(--surface), rgba(99, 102, 241, 0.05)); border: 1px solid var(--border); border-radius: 40px; padding: 4rem 2rem; text-align: center; margin: 60px 0; } /* Reduced margin */
         .slider { width: 100%; height: 8px; background: var(--border); border-radius: 10px; appearance: none; margin: 40px 0; outline: none; }
         .slider::-webkit-slider-thumb { appearance: none; width: 28px; height: 28px; background: var(--primary); border-radius: 50%; cursor: pointer; border: 4px solid var(--bg); box-shadow: 0 0 15px var(--primary-glow); }
 
         /* Responsive Mobile */
+        @media (max-width: 900px) {
+            .nav-links { display: none; } /* Hide menu on small screens */
+        }
         @media (max-width: 768px) {
             header { padding: 0.5rem 1rem; }
             .workflow::before { display: none; }
-            .step { flex-direction: column !important; text-align: center; gap: 15px; }
+            .step { flex-direction: column !important; text-align: center; gap: 20px; }
             .step-content { width: 100%; }
+            .step-visual { display: none; }
             .hero { padding-top: 140px; }
         }
 
         /* Marquee */
-        .marquee { overflow: hidden; white-space: nowrap; padding: 30px 0; border-y: 1px solid var(--border); background: rgba(255,255,255,0.02); margin: 40px 0; }
+        .marquee { overflow: hidden; white-space: nowrap; padding: 30px 0; border-y: 1px solid var(--border); background: rgba(255,255,255,0.02); margin: 30px 0; }
         .marquee-content { display: inline-block; animation: scroll 40s linear infinite; }
         .marquee-content span { margin: 0 40px; font-weight: 800; font-size: 1.2rem; color: var(--text-muted); letter-spacing: 2px; }
         @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -155,6 +244,15 @@
 
 <header>
     <a href="#" class="logo">TIXWOO<span style="color:var(--text-main)">.</span></a>
+    
+    <!-- Added Menu -->
+    <nav class="nav-links">
+        <a href="#services" data-i18n="m-services">الخدمات</a>
+        <a href="#process-sec" data-i18n="m-process">كيف نعمل</a>
+        <a href="#portfolio" data-i18n="m-portfolio">الأعمال</a>
+        <a href="#roi-sec" data-i18n="m-roi">العائد</a>
+    </nav>
+
     <div class="nav-actions">
         <button class="btn btn-s" onclick="toggleTheme()" id="themeBtn" style="padding: 0.5rem 0.8rem;"><i class="fas fa-moon"></i></button>
         <button class="btn btn-s" onclick="toggleLang()" id="langBtn" style="padding: 0.5rem 0.8rem;">EN</button>
@@ -186,7 +284,7 @@
     </div>
 
     <!-- Services Section -->
-    <section id="services" style="padding: 80px 0;">
+    <section id="services" style="padding: 50px 0;">
         <span class="section-tag" style="text-align: center;" data-i18n="s-tag">الخدمات المتكاملة</span>
         <h2 class="section-title" data-i18n="s-title">حلول الأتمتة والمنصات</h2>
         
@@ -225,42 +323,74 @@
     </section>
 
     <!-- Workflow Section -->
-    <section class="process-section">
+    <section class="process-section" id="process-sec">
         <span class="section-tag" style="text-align: center;" data-i18n="w-tag">كيف نعمل؟</span>
         <h2 class="section-title" data-i18n="w-title">خطوات رحلة التحول الرقمي</h2>
         
         <div class="workflow">
+            <!-- Step 1 -->
             <div class="step" data-aos="fade-right">
                 <div class="step-content">
                     <h3 data-i18n="w1-t">1. التحليل والتدقيق</h3>
                     <p data-i18n="w1-d">ندرس دورتك التشغيلية الحالية ونحدد نقاط الهدر الزمني والمالي التي يمكن أتمتتها.</p>
                 </div>
                 <div class="step-num">1</div>
-                <div style="width: 45%;"></div>
+                <div class="step-visual">
+                    <div class="visual-card">
+                        <div class="bars-container">
+                            <div class="v-bar"></div>
+                            <div class="v-bar"></div>
+                            <div class="v-bar"></div>
+                            <div class="v-bar"></div>
+                        </div>
+                        <span style="font-size:0.7rem; color:var(--text-muted); margin-top:10px;">Data Analysis...</span>
+                    </div>
+                </div>
             </div>
+
+            <!-- Step 2 -->
             <div class="step" data-aos="fade-left">
-                <div style="width: 45%;"></div>
+                <div class="step-visual">
+                    <div class="visual-card">
+                        <div class="nodes-container">
+                            <div class="node-dot n1"></div>
+                            <div class="node-line n-line"></div>
+                            <div class="node-dot n2"></div>
+                        </div>
+                        <span style="font-size:0.7rem; color:var(--text-muted); margin-top:20px;">Architecture Mapping</span>
+                    </div>
+                </div>
                 <div class="step-num">2</div>
                 <div class="step-content">
                     <h3 data-i18n="w2-t">2. بناء الهيكلية</h3>
                     <p data-i18n="w2-d">تصميم مخطط الربط (Integration Map) بين المنصات المختلفة لضمان تدفق البيانات بسلاسة.</p>
                 </div>
             </div>
+
+            <!-- Step 3 -->
             <div class="step" data-aos="fade-right">
                 <div class="step-content">
                     <h3 data-i18n="w3-t">3. التنفيذ والاختبار</h3>
                     <p data-i18n="w3-d">تفعيل السيناريوهات المؤتمتة وإجراء اختبارات صارمة لضمان دقة العمليات 100%.</p>
                 </div>
                 <div class="step-num">3</div>
-                <div style="width: 45%;"></div>
+                <div class="step-visual">
+                    <div class="visual-card">
+                        <div class="terminal-box">
+                            <span class="term-line">> Deploying scripts...</span>
+                            <span class="term-line">> Testing API... OK</span>
+                            <span class="term-line success-txt">> System Live <span class="blink">_</span></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Portfolio Gallery -->
-    <section id="portfolio" style="padding: 80px 0;">
-        <span class="section-tag" data-i18n="p-tag">معرض الأعمال</span>
-        <h2 class="section-title" style="text-align: left;" data-i18n="p-title">نجاحات الأتمتة</h2>
+    <section id="portfolio" style="padding: 50px 0;">
+        <span class="section-tag" style="text-align: center;" data-i18n="p-tag">معرض الأعمال</span>
+        <h2 class="section-title" data-i18n="p-title">نجاحات الأتمتة</h2>
         
         <div class="portfolio-grid">
             <div class="project-card" data-aos="fade-up">
@@ -283,7 +413,7 @@
     </section>
 
     <!-- ROI Calculator -->
-    <section class="roi-box" data-aos="zoom-in">
+    <section class="roi-box" id="roi-sec" data-aos="zoom-in">
         <h2 data-i18n="r-t">احسب وفرك التشغيلي</h2>
         <p style="color:var(--text-muted); margin-bottom: 20px;" data-i18n="r-d">كم عدد الطلبات التي تعالجها شهرياً؟</p>
         <input type="range" min="50" max="5000" value="300" class="slider" id="roiSlider">
@@ -324,7 +454,7 @@
     </section>
 </main>
 
-<footer style="padding: 60px 0; text-align: center; border-top: 1px solid var(--border); margin-top: 100px;">
+<footer style="padding: 60px 0; text-align: center; border-top: 1px solid var(--border); margin-top: 60px;">
     <div class="logo" style="justify-content: center; margin-bottom: 20px;">TIXWOO.</div>
     <p style="color: var(--text-muted); font-size: 0.9rem;" data-i18n="footer">© 2026 TIXWOO Automation Studios. All rights reserved.</p>
 </footer>
@@ -357,6 +487,7 @@
     const i18n = {
         ar: {
             "n-start": "ابدأ المشروع", "p-live": "متاح الآن لمشاريع جديدة",
+            "m-services": "الخدمات", "m-process": "كيف نعمل", "m-portfolio": "الأعمال", "m-roi": "العائد",
             "h-title": "أتمتة ذكية تنقل تجارتك <span>للمستوى التالي</span>",
             "h-desc": "نقوم ببناء أنظمة بيئية رقمية تربط متجرك بذكاء اصطناعي، أنظمة شحن، وبرمجيات محاسبة لتعمل تجارتك تلقائياً 24/7.",
             "h-btn1": "استشارة مجانية", "h-btn2": "استكشف حلولنا",
@@ -382,6 +513,7 @@
         },
         en: {
             "n-start": "Start Project", "p-live": "Available for new projects",
+            "m-services": "Services", "m-process": "Process", "m-portfolio": "Portfolio", "m-roi": "ROI",
             "h-title": "Smart Automation to Scale <span>Your Business</span>",
             "h-desc": "We build digital ecosystems that connect your store with AI, shipping, and accounting tools so your business runs 24/7.",
             "h-btn1": "Free Consultation", "h-btn2": "Explore Solutions",
@@ -439,20 +571,20 @@
 
 <!-- Chatwoot Integration -->
 <script>
-  (function(d,t) {
-    var BASE_URL="https://chatwoot.tixwoo.com";
-    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=BASE_URL+"/packs/js/sdk.js";
-    g.async = true;
-    s.parentNode.insertBefore(g,s);
-    g.onload=function(){
-      window.chatwootSDK.run({
-        websiteToken: 'DXez8SL7chrdmWycdVFKv67s',
-        baseUrl: BASE_URL
-      })
-    }
-  })(document,"script");
-</script>
+    (function(d,t) {
+      var BASE_URL="https://chatwoot.tixwoo.com";
+      var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src=BASE_URL+"/packs/js/sdk.js";
+      g.async = true;
+      s.parentNode.insertBefore(g,s);
+      g.onload=function(){
+        window.chatwootSDK.run({
+          websiteToken: 'DXez8SL7chrdmWycdVFKv67s',
+          baseUrl: BASE_URL
+        })
+      }
+    })(document,"script");
+  </script>
 
 </body>
 </html>
