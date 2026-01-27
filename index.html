@@ -67,6 +67,29 @@
             transition: background 0.5s ease, color 0.5s ease;
             overflow-x: hidden;
             line-height: 1.6;
+            /* Prevent layout shift on load */
+            min-height: 100vh;
+        }
+
+        /* Ensure elements are visible before AOS initializes */
+        [data-aos] {
+            visibility: hidden;
+        }
+        
+        [data-aos].aos-animate {
+            visibility: visible;
+        }
+        
+        /* Prevent flash of unstyled content */
+        .hero, .services-grid, .workflow, .portfolio-grid, .roi-box, .tech-stack {
+            opacity: 0;
+            animation: fadeInPage 0.3s ease-out forwards;
+        }
+        
+        @keyframes fadeInPage {
+            to {
+                opacity: 1;
+            }
         }
 
         .container { 
@@ -898,7 +921,7 @@
 
 <main class="container">
     <!-- Hero Section -->
-    <section class="hero" data-aos="zoom-out-up">
+    <section class="hero">
         <div class="pulse-bar">
             <div class="pulse-dot"></div>
             <span id="pulseText" data-i18n="p-live">متاح الآن لمشاريع جديدة</span>
@@ -965,7 +988,7 @@
         
         <div class="workflow">
             <!-- Step 1 -->
-            <div class="step" data-aos="fade-right">
+            <div class="step" data-aos="fade-up" data-aos-delay="100">
                 <div class="step-content">
                     <h3 data-i18n="w1-t">1. التحليل والتدقيق</h3>
                     <p data-i18n="w1-d">ندرس دورتك التشغيلية الحالية ونحدد نقاط الهدر الزمني والمالي التي يمكن أتمتتها.</p>
@@ -985,7 +1008,7 @@
             </div>
 
             <!-- Step 2 -->
-            <div class="step" data-aos="fade-left">
+            <div class="step" data-aos="fade-up" data-aos-delay="200">
                 <div class="step-visual">
                     <div class="visual-card">
                         <div class="nodes-container">
@@ -1004,7 +1027,7 @@
             </div>
 
             <!-- Step 3 -->
-            <div class="step" data-aos="fade-right">
+            <div class="step" data-aos="fade-up" data-aos-delay="300">
                 <div class="step-content">
                     <h3 data-i18n="w3-t">3. التنفيذ والاختبار</h3>
                     <p data-i18n="w3-d">تفعيل السيناريوهات المؤتمتة وإجراء اختبارات صارمة لضمان دقة العمليات 100%.</p>
@@ -1049,7 +1072,7 @@
     </section>
 
     <!-- ROI Calculator -->
-    <section class="roi-box" id="roi-sec" data-aos="zoom-in">
+    <section class="roi-box" id="roi-sec" data-aos="fade-up">
         <h2 data-i18n="r-t">احسب وفرك التشغيلي</h2>
         <p style="color:var(--text-muted);" data-i18n="r-d">كم عدد الطلبات التي تعالجها شهرياً؟</p>
         <input type="range" min="50" max="5000" value="300" class="slider" id="roiSlider">
@@ -1097,7 +1120,42 @@
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({ duration: 1000, once: true, easing: 'ease-out-quad' });
+    // Initialize page properly before animations
+    document.addEventListener('DOMContentLoaded', function() {
+        // Wait for fonts and styles to load
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(function() {
+                initializePage();
+            });
+        } else {
+            // Fallback for browsers without font loading API
+            setTimeout(initializePage, 100);
+        }
+    });
+
+    function initializePage() {
+        // Initialize AOS with proper settings
+        AOS.init({ 
+            duration: 1000, 
+            once: true, 
+            easing: 'ease-out-quad',
+            offset: 50,
+            delay: 0,
+            disable: false,
+            startEvent: 'load',
+            initClassName: 'aos-init',
+            animatedClassName: 'aos-animate',
+            useClassNames: false,
+            disableMutationObserver: false,
+            throttleDelay: 99,
+            debounceDelay: 50
+        });
+        
+        // Refresh AOS to recalculate positions
+        setTimeout(function() {
+            AOS.refresh();
+        }, 100);
+    }
 
     // Theme Toggle
     function toggleTheme() {
@@ -1203,6 +1261,41 @@
         pulseText.innerText = updates[currentLang][uIdx];
         uIdx = (uIdx + 1) % updates[currentLang].length;
     }, 4000);
+
+    // Force layout recalculation on window load
+    window.addEventListener('load', function() {
+        // Recalculate all positions
+        if (window.AOS) {
+            setTimeout(function() {
+                AOS.refresh();
+            }, 200);
+        }
+        
+        // Force reflow to fix any layout issues
+        document.body.style.display = 'none';
+        document.body.offsetHeight; // Trigger reflow
+        document.body.style.display = '';
+    });
+
+    // Handle orientation changes
+    window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+            if (window.AOS) {
+                AOS.refresh();
+            }
+        }, 300);
+    });
+
+    // Handle resize events
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (window.AOS) {
+                AOS.refresh();
+            }
+        }, 250);
+    });
 </script>
 
 <!-- Chatwoot Integration -->
